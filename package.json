@@ -1,21 +1,20 @@
 {
-  "name": "email-sender-module",
-  "version": "1.0.2",
+  "name": "@iterout/email-sender-module",
+  "version": "1.0.0",
   "description": "Email sender module",
-  "main": "index.js",
   "files": [
-    "dist/"
+    "lib/"
   ],
   "scripts": {
     "test": "jest",
-    "clean": "rimraf dist",
+    "clean": "rimraf lib",
     "build": "npm run clean && tsc"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mattia-bonardi-smeup/email-sender-module.git"
   },
-  "author": "Mattia Bonardi",
+  "author": "@iterout",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mattia-bonardi-smeup/email-sender-module/issues"
