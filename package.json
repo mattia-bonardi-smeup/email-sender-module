@@ -1,8 +1,11 @@
 {
   "name": "email-sender-module",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Email sender module",
   "main": "index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "test": "jest",
     "clean": "rimraf dist",
