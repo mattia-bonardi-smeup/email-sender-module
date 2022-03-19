@@ -1,4 +1,4 @@
-import loadTemplate from "./loadTemplate";
+import { loadTemplate } from "./loadTemplate.js";
 
 /**
  * Resolve template with variables
@@ -6,7 +6,7 @@ import loadTemplate from "./loadTemplate";
  * @param variables
  * @returns
  */
-export default function resolveTemplate(
+export function resolveTemplate(
   templateName: string,
   variables: Map<string, string>
 ) {

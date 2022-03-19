@@ -1,5 +1,5 @@
-import * as nodemailer from "nodemailer";
-import SMTPTransport = require("nodemailer/lib/smtp-transport");
+import nodemailer from "nodemailer";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 /**
  * Email sender configuration
@@ -43,5 +43,4 @@ class EmailSenderConfiguration {
   }
 }
 
-const emailSenderConfiguration = new EmailSenderConfiguration();
-export default emailSenderConfiguration;
+export const emailSenderConfiguration = new EmailSenderConfiguration();

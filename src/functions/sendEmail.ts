@@ -1,5 +1,5 @@
-import emailSenderConfiguration from "../configurations/EmailSenderConfiguration";
-import resolveTemplate from "../services/resolveTemplate";
+import { emailSenderConfiguration } from "../configurations/EmailSenderConfiguration.js";
+import { resolveTemplate } from "../services/resolveTemplate.js";
 
 /**
  * Send Html email
@@ -8,7 +8,7 @@ import resolveTemplate from "../services/resolveTemplate";
  * @param templateName
  * @param variables
  */
-export default async function sendEmail(
+export async function sendEmail(
   to: string,
   subject: string,
   templateName: string,

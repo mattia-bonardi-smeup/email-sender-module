@@ -1,13 +1,20 @@
 {
   "name": "@iterout/email-sender-module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Email sender module",
   "files": [
-    "lib/"
+    "dist/"
   ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest",
-    "clean": "rimraf lib",
+    "clean": "rimraf dist",
     "build": "npm run clean && tsc"
   },
   "repository": {
@@ -22,13 +29,11 @@
   "homepage": "https://github.com/mattia-bonardi-smeup/email-sender-module#readme",
   "dependencies": {
     "fs": "^0.0.1-security",
-    "jest": "^27.4.7",
     "nodemailer": "^6.7.2"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.0",
     "@types/nodemailer": "^6.4.4",
-    "ts-jest": "^27.1.3",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "rimraf": "^3.0.2"
   }
 }

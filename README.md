@@ -5,7 +5,7 @@ Email senders with variables substitution into html template for node.js backend
 ## Installation
 
 ```
-npm install email-sender-module
+npm install @iterout/email-sender-module
 ```
 
 ## Configuration
@@ -13,7 +13,7 @@ npm install email-sender-module
 To configure correctly the email sender you can set your specified parameters like this:
 
 ```
-import emailSenderConfiguration from "../configurations/EmailSenderConfiguration";
+import {emailSenderConfiguration} from "@iterout/email-sender-module";
 
 emailSenderConfiguration.setTemplateDir([HTML_TEMPLATE_DIRECTORY]);
 emailSenderConfiguration.configureEmailSender([EMAIL_SERVICE],[EMAIL_SENDER],[EMAIL_PASSWORD]);
@@ -34,6 +34,8 @@ In the template directory you can put your html files. Files can contains bindin
 Send email to specified address using specified template.
 
 ```
+import {sendEmail} from "@iterout/email-sender-module";
+
 sendEmail(
   to: string, //email recipient
   subject: string, //email subject
