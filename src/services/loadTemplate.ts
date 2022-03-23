@@ -9,7 +9,7 @@ export function loadTemplate(templateName: string): string {
   return fs
     .readFileSync(
       process.cwd() +
-        emailSenderConfiguration.getTemplateDir() +
+        emailSenderConfiguration.HTML_TEMPLATE_DIR +
         templateName +
         ".html"
     )

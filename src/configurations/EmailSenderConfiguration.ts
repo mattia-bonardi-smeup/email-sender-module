@@ -1,45 +1,42 @@
+import { EmailServices, EmailTransporter } from "../types/types.js";
 import nodemailer from "nodemailer";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 /**
  * Email sender configuration
  */
 class EmailSenderConfiguration {
-  // Email credential configuration
-  private SENDER: string;
-  private TRASPORTER: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
-  // Email content configuration
-  private TEMPLATE_DIR: string = "email_templates";
+  /**
+   * Html mail template directory
+   * default: email_templates
+   */
+  HTML_TEMPLATE_DIR: "email_templates";
+  /**
+   * Trasporter maps
+   */
+  TRANSPORTER_MAP: Map<string, EmailTransporter> = new Map<
+    string,
+    EmailTransporter
+  >();
 
-  public getSender() {
-    return this.SENDER;
-  }
-
-  public getTransporter() {
-    return this.TRASPORTER;
-  }
-
-  public getTemplateDir() {
-    return this.TEMPLATE_DIR;
-  }
-
-  public configureEmailSender(
-    service: string,
+  /**
+   * Set tranporter
+   */
+  setTransporter(
+    transporterId: string,
+    service: EmailServices,
     sender: string,
     password: string
   ) {
-    this.SENDER = sender;
-    this.TRASPORTER = nodemailer.createTransport({
-      service: service,
-      auth: {
-        user: sender,
-        pass: password,
-      },
+    this.TRANSPORTER_MAP.set(transporterId, {
+      sender: sender,
+      transporter: nodemailer.createTransport({
+        service: service,
+        auth: {
+          user: sender,
+          pass: password,
+        },
+      }),
     });
-  }
-
-  public setTemplateDir(templateDir: string) {
-    this.TEMPLATE_DIR = templateDir;
   }
 }
 
