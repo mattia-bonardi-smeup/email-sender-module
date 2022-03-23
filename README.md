@@ -13,10 +13,20 @@ npm install @iterout/email-sender-module
 To configure correctly the email sender you can set your specified parameters like this:
 
 ```
-import {emailSenderConfiguration} from "@iterout/email-sender-module";
+import { createEmailTransporter, configureEmailSenderModule } from "@iterout/email-sender-module";
 
-emailSenderConfiguration.setTemplateDir([HTML_TEMPLATE_DIRECTORY]);
-emailSenderConfiguration.configureEmailSender([EMAIL_SERVICE],[EMAIL_SENDER],[EMAIL_PASSWORD]);
+// create transporter configuration
+const tranporter = createEmailTransporter(
+  sender: string,
+  password: string,
+  service: EmailServices
+): EmailTransporter
+
+// setup
+configureEmailSenderModule(
+  emailTemplate: string,
+  emailTransporters: EmailTransporter[]
+)
 ```
 
 ## Html template
@@ -31,15 +41,16 @@ In the template directory you can put your html files. Files can contains bindin
 
 ### SendEmail
 
-Send email to specified address using specified template.
+Send email with specified sender (configurated previously) to specified address using specified template. If sender isn't set will be used the first of the list.
 
 ```
-import {sendEmail} from "@iterout/email-sender-module";
+import { sendEmail } from "@iterout/email-sender-module";
 
 sendEmail(
-  to: string, //email recipient
-  subject: string, //email subject
-  templateName: string, //html template
-  variables: Map<string, string> //map of variables to resolve
-);
+  to: string,
+  subject: string,
+  templateName: string,
+  variables: Map<string, string>,
+  sender?: string
+)
 ```

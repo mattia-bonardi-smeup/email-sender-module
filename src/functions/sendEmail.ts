@@ -1,4 +1,6 @@
 import { emailSenderConfiguration } from "../configurations/EmailSenderConfiguration.js";
+import { EmailSenderConfigurationException } from "../exceptions/EmailSenderConfigurationException.js";
+import { SendEmailException } from "../exceptions/SendEmailException.js";
 import { resolveTemplate } from "../services/resolveTemplate.js";
 import { EmailTransporter } from "../types/types.js";
 
@@ -14,20 +16,35 @@ export async function sendEmail(
   subject: string,
   templateName: string,
   variables: Map<string, string>,
-  transporterId?: string
+  sender?: string
 ) {
-  let transporter: EmailTransporter;
-  if (transporterId) {
-    transporter = emailSenderConfiguration.TRANSPORTER_MAP.get(transporterId);
+  let emailTransporter: EmailTransporter;
+  if (sender) {
+    emailTransporter = emailSenderConfiguration.TRANSPORTERS.find(
+      (x) => x.sender === sender
+    );
+    if (!emailTransporter) {
+      throw new EmailSenderConfigurationException(
+        `Sender ${sender} not found in configuration`
+      );
+    }
   } else {
-    const [firstTraspoter] = emailSenderConfiguration.TRANSPORTER_MAP.values();
-    transporter = firstTraspoter;
+    emailTransporter = emailSenderConfiguration.TRANSPORTERS[0];
+    if (!emailTransporter) {
+      throw new EmailSenderConfigurationException(
+        "Tranporters configuration is empty"
+      );
+    }
   }
   const mailOptions = {
-    from: transporter.sender,
+    from: sender,
     to: to,
     subject: subject,
     html: resolveTemplate(templateName, variables),
   };
-  transporter.transporter.sendMail(mailOptions);
+  try {
+    emailTransporter.transporter.sendMail(mailOptions);
+  } catch (error) {
+    throw new SendEmailException(error);
+  }
 }
