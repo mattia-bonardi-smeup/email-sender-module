@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from "fs";
-import { TemplateNotFoundException } from "../exceptions/TemplateNotFoundException";
+import { TemplateNotFoundException } from "../exceptions/TemplateNotFoundException.js";
 import { join } from "path";
 
 /**
