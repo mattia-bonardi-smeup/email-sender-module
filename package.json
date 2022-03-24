@@ -1,6 +1,6 @@
 {
   "name": "@iterout/email-sender-module",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Email sender module",
   "files": [
     "dist/"
