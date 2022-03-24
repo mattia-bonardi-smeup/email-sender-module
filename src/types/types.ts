@@ -2,16 +2,17 @@ import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 /**
- * Email transporter
+ * Email config
  */
-export type EmailTransporter = {
+export type EmailConfig = {
+  emailTemplatesDirectories: string[];
   sender: string;
   transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
 };
 
 /**
- * Email services
+ * Template variables
  */
-export enum EmailServices {
-  GMAIL = "gmail",
-}
+export type TemplateVariables = {
+  [key: string]: string;
+};

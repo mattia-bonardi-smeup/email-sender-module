@@ -1,20 +1,22 @@
-import { EmailServices, EmailTransporter } from "../types/types.js";
+import { EmailConfig } from "../types/types.js";
 import nodemailer from "nodemailer";
-import { emailSenderConfiguration } from "./EmailSenderConfiguration.js";
 
 /**
  * Create email transporter
+ * @param emailTemplatesDirectories
  * @param sender
  * @param password
  * @param service
  * @returns
  */
-export function createEmailTransporter(
+export function createEmailConfig(
+  emailTemplatesDirectories: string[],
   sender: string,
   password: string,
-  service: EmailServices
-): EmailTransporter {
+  service: string
+): EmailConfig {
   return {
+    emailTemplatesDirectories: emailTemplatesDirectories,
     sender: sender,
     transporter: nodemailer.createTransport({
       service: service,
@@ -24,12 +26,4 @@ export function createEmailTransporter(
       },
     }),
   };
-}
-
-export function configureEmailSenderModule(
-  emailTemplate: string,
-  emailTransporters: EmailTransporter[]
-) {
-  emailSenderConfiguration.HTML_TEMPLATE_DIR = emailTemplate;
-  emailSenderConfiguration.TRANSPORTERS = emailTransporters;
 }

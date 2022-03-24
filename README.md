@@ -1,6 +1,6 @@
 # Email Sender Module
 
-Email senders with variables substitution into html template for node.js backend app.
+Email senders with html template engine for node.js backend app.
 
 ## Installation
 
@@ -10,22 +10,16 @@ npm install @iterout/email-sender-module
 
 ## Configuration
 
-To configure correctly the email sender you can set your specified parameters like this:
+Create one or multiple `EmailConfig` to associate email creadential and templates directories. The template search priority is set according to the folder order. The module also provides an utility to create the configuration (`createEmailConfig()`)
 
 ```
-import { createEmailTransporter, configureEmailSenderModule } from "@iterout/email-sender-module";
+import { createEmailConfig } from "@iterout/email-sender-module";
 
-// create transporter configuration
-const tranporter = createEmailTransporter(
-  sender: string,
-  password: string,
-  service: EmailServices
-): EmailTransporter
-
-// setup
-configureEmailSenderModule(
-  emailTemplate: string,
-  emailTransporters: EmailTransporter[]
+const emailConfig: EmailConfig = createEmailConfig(
+  emailTemplatesDirectories: [LIST_OF_DRECTORIES_PATH],
+  sender: [EMAIL_SENDER],
+  password: [EMAIL_SENDER_PASSWORD],
+  service: [EMAIL_SERVICE]
 )
 ```
 
@@ -41,16 +35,16 @@ In the template directory you can put your html files. Files can contains bindin
 
 ### SendEmail
 
-Send email with specified sender (configurated previously) to specified address using specified template. If sender isn't set will be used the first of the list.
+Send email with specified `EmailConfig` to specified address using specified template.
 
 ```
 import { sendEmail } from "@iterout/email-sender-module";
 
 sendEmail(
-  to: string,
-  subject: string,
-  templateName: string,
-  variables: Map<string, string>,
-  sender?: string
+  config: [EMAIL_CONFIG],
+  to: [RECIPIENT],
+  subject: [SUBJECT],
+  templateName: [NAME_OF_HTML_TEMPLATE],
+  variables: [VARIABLES]
 )
 ```

@@ -1,8 +1,7 @@
-import { emailSenderConfiguration } from "../configurations/EmailSenderConfiguration.js";
-import { EmailSenderConfigurationException } from "../exceptions/EmailSenderConfigurationException.js";
 import { SendEmailException } from "../exceptions/SendEmailException.js";
+import { loadTemplate } from "../services/loadTemplate.js";
 import { resolveTemplate } from "../services/resolveTemplate.js";
-import { EmailTransporter } from "../types/types.js";
+import { EmailConfig, TemplateVariables } from "../types/types.js";
 
 /**
  * Send Html email
@@ -12,39 +11,33 @@ import { EmailTransporter } from "../types/types.js";
  * @param variables
  */
 export async function sendEmail(
+  config: EmailConfig,
   to: string,
   subject: string,
   templateName: string,
-  variables: Map<string, string>,
-  sender?: string
+  variables: TemplateVariables
 ) {
-  let emailTransporter: EmailTransporter;
-  if (sender) {
-    emailTransporter = emailSenderConfiguration.TRANSPORTERS.find(
-      (x) => x.sender === sender
-    );
-    if (!emailTransporter) {
-      throw new EmailSenderConfigurationException(
-        `Sender ${sender} not found in configuration`
-      );
-    }
-  } else {
-    emailTransporter = emailSenderConfiguration.TRANSPORTERS[0];
-    if (!emailTransporter) {
-      throw new EmailSenderConfigurationException(
-        "Tranporters configuration is empty"
-      );
-    }
-  }
-  const mailOptions = {
-    from: sender,
-    to: to,
-    subject: subject,
-    html: resolveTemplate(templateName, variables),
-  };
   try {
-    emailTransporter.transporter.sendMail(mailOptions);
+    const templateContent: string = loadTemplate(
+      templateName,
+      config.emailTemplatesDirectories
+    );
+    const resolvedTemplateContent: string = resolveTemplate(
+      templateContent,
+      variables
+    );
+    const mailOptions = {
+      from: config.sender,
+      to: to,
+      subject: subject,
+      html: resolvedTemplateContent,
+    };
+    try {
+      config.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw new SendEmailException(error);
+    }
   } catch (error) {
-    throw new SendEmailException(error);
+    throw error;
   }
 }
