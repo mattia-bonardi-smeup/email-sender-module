@@ -1,9 +1,9 @@
-export class SendEmailException extends Error {
-  public statusCode: number;
-  public statusMessage: string;
+import { EmailSenderException } from "./EmailSenderException.js";
+
+export class SendEmailException extends EmailSenderException {
+  public error: any;
   constructor(error: any) {
-    super(error);
-    this.statusCode = 500;
-    this.statusMessage = "Email sender exception";
+    super(500, "Error while sending the email");
+    this.error = error;
   }
 }

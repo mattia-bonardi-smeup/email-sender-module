@@ -1,9 +1,7 @@
-export class TemplateNotFoundException extends Error {
-  public statusCode: number;
-  public statusMessage: string;
+import { EmailSenderException } from "./EmailSenderException.js";
+
+export class TemplateNotFoundException extends EmailSenderException {
   constructor(templateName: string) {
-    super();
-    this.statusCode = 500;
-    this.statusMessage = `Template ${templateName} not found exception`;
+    super(500, `Template ${templateName} not found exception`);
   }
 }
